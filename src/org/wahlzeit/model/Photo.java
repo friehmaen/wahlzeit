@@ -23,6 +23,8 @@ package org.wahlzeit.model;
 import java.sql.*;
 import java.net.*;
 
+import org.wahlzeit.location.Location;
+import org.wahlzeit.location.LocationFactory;
 import org.wahlzeit.services.*;
 import org.wahlzeit.utils.*;
 
@@ -43,6 +45,9 @@ public class Photo extends DataObject {
 	public static final String PRAISE = "praise";
 	public static final String NO_VOTES = "noVotes";
 	public static final String CAPTION = "caption";
+	public static final String LOCATION = "location";
+	public static final String LOCATION_DESC = "location_desc";
+	public static final String LOCATION_URL = "location_url";
 	public static final String DESCRIPTION = "description";
 	public static final String KEYWORDS = "keywords";
 
@@ -95,6 +100,8 @@ public class Photo extends DataObject {
 	 * 
 	 */
 	protected PhotoStatus status = PhotoStatus.VISIBLE;
+	
+	protected Location location = null;
 	
 	/**
 	 * 
@@ -167,6 +174,8 @@ public class Photo extends DataObject {
 		creationTime = rset.getLong("creation_time");
 
 		maxPhotoSize = PhotoSize.getFromWidthHeight(width, height);
+		
+		location = LocationFactory.create(rset.getString("location"));
 	}
 	
 	/**
@@ -186,7 +195,12 @@ public class Photo extends DataObject {
 		rset.updateInt("status", status.asInt());
 		rset.updateInt("praise_sum", praiseSum);
 		rset.updateInt("no_votes", noVotes);
-		rset.updateLong("creation_time", creationTime);		
+		rset.updateLong("creation_time", creationTime);	
+		
+		if (location != null)
+		{
+			rset.updateString("location", location.asString());
+		}
 	}
 
 	/**
@@ -481,4 +495,21 @@ public class Photo extends DataObject {
 		return creationTime;
 	}
 	
+	/**
+	 * 
+	 * @methodtype get
+	 */
+	public Location getLocation()
+	{
+		return location;
+	}
+	
+	/**
+	 * 
+	 * @methodtype set
+	 */
+	public void setLocation(Location loc)
+	{
+		location = loc;
+	}
 }

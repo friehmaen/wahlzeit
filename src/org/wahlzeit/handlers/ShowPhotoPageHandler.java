@@ -22,6 +22,7 @@ package org.wahlzeit.handlers;
 
 import java.util.*;
 
+import org.wahlzeit.location.Location;
 import org.wahlzeit.model.*;
 import org.wahlzeit.services.*;
 import org.wahlzeit.utils.*;
@@ -163,6 +164,21 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 			
 		WebPart caption = createWebPart(us, PartUtil.CAPTION_INFO_FILE);
 		caption.addString(Photo.CAPTION, getPhotoCaption(us, photo));
+		
+		Location loc = photo.getLocation();
+		
+		if (loc != null)
+		{
+			caption.addString(Photo.LOCATION, loc.asString());
+			caption.addString(Photo.LOCATION_DESC, loc.getDescription());
+			//caption.addString(Photo.LOCATION_URL, "<a href=\"" + loc.getMapLink() + "\" target=\"new\">" + loc.asString() + "</a>");
+			caption.addString(Photo.LOCATION_URL, HtmlUtil.asHref(loc.getMapLink()));
+		}
+		else
+		{
+			caption.addString(Photo.LOCATION, "-");
+		}
+		
 		page.addWritable(Photo.CAPTION, caption);
 	}
 
