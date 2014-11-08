@@ -7,16 +7,15 @@ public class LocationFactory
 {
 	public static Location create(String location)
 	{
-		Location l = null;
-		
 		if (location == null || location.isEmpty())
-			return l;
+			return null;
 		
+		//generate a list of all location implementations
 		List<Location> locationList = new ArrayList<Location>();
-		
 		locationList.add(new GpsLocation());
 		locationList.add(new MapCodeLocation());
 		
+		//now try to create a valid location object
 		for (Location loc: locationList)
 		{
 			if (loc.fromString(location))
@@ -37,7 +36,7 @@ public class LocationFactory
 		}
 		*/
 		
-		return l;
+		return null;
 	}
 
 }
