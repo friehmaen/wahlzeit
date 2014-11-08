@@ -15,12 +15,14 @@ public abstract class AbstractLocation implements Location {
 		return m_description;
 	}
 	
-	public void fromString(String loc)
+	public boolean fromString(String loc)
 	{
 		if (isValid(loc))
 		{
 			createFromString(loc);
+			return true;
 		}
+		return false;
 	}
 	
 	protected abstract void createFromString(String loc);
