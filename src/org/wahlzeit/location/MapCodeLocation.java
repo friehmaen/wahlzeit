@@ -1,6 +1,11 @@
 package org.wahlzeit.location;
 
-import org.wahlzeit.utils.HtmlUtil;
+import com.mapcode.MapcodeCodec;
+import com.mapcode.Point;
+import com.mapcode.Territory;
+import com.mapcode.UnknownMapcodeException;
+import com.mapcode.UnknownTerritoryException;
+
 
 public class MapCodeLocation extends AbstractLocation {
 
@@ -10,56 +15,65 @@ public class MapCodeLocation extends AbstractLocation {
 	@Override
 	public String getMapLink() 
 	{
-		return "http://www.mapcode.com/de/getcoords.html?mapcode=" + getCode();
+		return "http://www.mapcode.com/de/getcoords.html?mapcode=" + asString();
 	}
 	
-	public static String getRegEx()
+	public String getRegEx()
 	{
 		return "^[A-Z]+ [A-Z0-9]{2,3}\\.[A-Z0-9]{2,3}$";
 	}
 	
-	private String toMapCode()
+	public String asString()
 	{
 		return m_territory + " " + m_code;
 	}
 	
-	public String asString()
+	protected void createFromString(String loc)
 	{
-		return getCode();
-	}
-	
-	protected void createfromString(String loc)
-	{
-		setCode(loc);
-	}
-	
-	public String getCode()		
-	{
-		return toMapCode();
-	}
-	
-	public void setCode(String pcode)
-	{
-		String[] parts = pcode.split(" ");
+		String[] parts = loc.split(" ");
 		if (parts.length == 2)
 		{
 			m_territory = parts[0];
 			m_code = parts[1];
 		}
 	}
-
-	public boolean isValid(String loc)
+	
+	public GpsLocation toGps()
 	{
-		if (loc.matches(MapCodeLocation.getRegEx()))
+		try 
 		{
-			return true;
+			Territory t = Territory.fromString(m_territory);
+			Point p = MapcodeCodec.decode(m_code, t);
+			return LocationFactory.create(p.getLatDeg(), p.getLonDeg());
+			
+		} catch (UnknownTerritoryException | IllegalArgumentException | UnknownMapcodeException e) {
+			e.printStackTrace();
 		}
-		return false;
+		return null;
 	}
-
-	@Override
-	protected void createFromString(String loc)
+	
+	public MapCodeLocation toMapCode()
 	{
-		setCode(loc);
+		return this;
+	}
+	
+	public void setCode(String code)
+	{
+		m_code = code;
+	}
+	
+	public String getCode()
+	{
+		return m_code;
+	}
+	
+	public void setTerritory(String territory)
+	{
+		m_territory = territory;
+	}
+	
+	public String getTerritory()
+	{
+		return m_territory;
 	}
 }

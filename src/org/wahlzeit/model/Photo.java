@@ -47,7 +47,8 @@ public class Photo extends DataObject {
 	public static final String CAPTION = "caption";
 	public static final String LOCATION = "location";
 	public static final String LOCATION_DESC = "location_desc";
-	public static final String LOCATION_URL = "location_url";
+	public static final String LOCATION_URL_MAPCODE = "location_url_mapcode";
+	public static final String LOCATION_URL_GPS = "location_url_gps";
 	public static final String DESCRIPTION = "description";
 	public static final String KEYWORDS = "keywords";
 

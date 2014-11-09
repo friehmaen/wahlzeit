@@ -21,22 +21,25 @@ public class LocationFactory
 			if (loc.fromString(location))
 				return loc;
 		}
-		
-		/*
-		 * 
-		if (location.matches(GpsLocation.getRegEx()))
-		{
-			l = new GpsLocation();
-			l.fromString(location);
-		}
-		else if (location.matches(MapCodeLocation.getRegEx()))
-		{
-			l = new MapCodeLocation();
-			l.fromString(location);
-		}
-		*/
-		
+	
 		return null;
 	}
-
+	
+	public static GpsLocation create(double plat, double plong)
+	{
+		GpsLocation loc = new GpsLocation();
+		loc.setLat(plat);
+		loc.setLong(plong);
+		
+		return loc;
+	}
+	
+	public static MapCodeLocation create(String territory, String code)
+	{
+		MapCodeLocation loc = new MapCodeLocation();
+		loc.setTerritory(territory);
+		loc.setCode(code);
+		
+		return loc;
+	}
 }

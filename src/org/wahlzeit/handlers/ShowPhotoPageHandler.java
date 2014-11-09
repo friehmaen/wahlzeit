@@ -22,7 +22,9 @@ package org.wahlzeit.handlers;
 
 import java.util.*;
 
+import org.wahlzeit.location.GpsLocation;
 import org.wahlzeit.location.Location;
+import org.wahlzeit.location.MapCodeLocation;
 import org.wahlzeit.model.*;
 import org.wahlzeit.services.*;
 import org.wahlzeit.utils.*;
@@ -172,7 +174,14 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 			caption.addString(Photo.LOCATION, loc.asString());
 			caption.addString(Photo.LOCATION_DESC, loc.getDescription());
 			//caption.addString(Photo.LOCATION_URL, "<a href=\"" + loc.getMapLink() + "\" target=\"new\">" + loc.asString() + "</a>");
-			caption.addString(Photo.LOCATION_URL, HtmlUtil.asHref(loc.getMapLink()));
+			
+			MapCodeLocation mcLoc = loc.toMapCode();
+			if (mcLoc != null)
+				caption.addString(Photo.LOCATION_URL_MAPCODE, HtmlUtil.asHrefNewWindow(mcLoc.getMapLink(), mcLoc.asString()));
+			
+			GpsLocation gpsLoc = loc.toGps();
+			if (gpsLoc != null)
+				caption.addString(Photo.LOCATION_URL_GPS, HtmlUtil.asHrefNewWindow(gpsLoc.getMapLink(), gpsLoc.asString()));
 		}
 		else
 		{

@@ -78,12 +78,26 @@ public class HtmlUtil {
 	public static String asHref(String link) {
 		return asHref(link, link);
 	}
+	
+	/**
+	 * 
+	 */
+	public static String asHrefNewWindow(String link) {
+		return asHref(link, link);
+	}
 		
 	/**
 	 * 
 	 */
 	public static String asHref(String link, String body) {
 		return "<a href=\"" + link + "\" rel=\"nofollow\">" + body + "</a>";
+	}
+	
+	/**
+	 * 
+	 */
+	public static String asHrefNewWindow(String link, String body) {
+		return "<a href=\"" + link + "\" rel=\"nofollow\" target=\"new\">" + body + "</a>";
 	}
 	
 	/**

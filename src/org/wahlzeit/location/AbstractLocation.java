@@ -15,6 +15,16 @@ public abstract class AbstractLocation implements Location {
 		return m_description;
 	}
 	
+	@Override
+	public boolean isValid(String loc) 
+	{
+		if (loc.matches(getRegEx()))
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean fromString(String loc)
 	{
 		if (isValid(loc))
