@@ -20,13 +20,22 @@
 
 package org.wahlzeit.model;
 
-import java.sql.*;
-import java.net.*;
+import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.wahlzeit.location.GpsLocation;
 import org.wahlzeit.location.Location;
 import org.wahlzeit.location.LocationFactory;
-import org.wahlzeit.services.*;
-import org.wahlzeit.utils.*;
+import org.wahlzeit.location.MapCodeLocation;
+import org.wahlzeit.services.DataObject;
+import org.wahlzeit.services.EmailAddress;
+import org.wahlzeit.services.Language;
+import org.wahlzeit.utils.HtmlUtil;
+import org.wahlzeit.utils.StringUtil;
 
 /**
  * A photo represents a user-provided (uploaded) photo.
@@ -46,9 +55,7 @@ public class Photo extends DataObject {
 	public static final String NO_VOTES = "noVotes";
 	public static final String CAPTION = "caption";
 	public static final String LOCATION = "location";
-	public static final String LOCATION_DESC = "location_desc";
-	public static final String LOCATION_URL_MAPCODE = "location_url_mapcode";
-	public static final String LOCATION_URL_GPS = "location_url_gps";
+	public static final String PROPERTIES = "properties";
 	public static final String DESCRIPTION = "description";
 	public static final String KEYWORDS = "keywords";
 
@@ -512,5 +519,35 @@ public class Photo extends DataObject {
 	public void setLocation(Location loc)
 	{
 		location = loc;
+	}
+	
+	public Map<String, String> getProperties()
+	{
+		Map<String, String> map = new HashMap<String, String>();
+		
+		collectProperties(map);
+		
+		return map;
+	}
+	
+	protected void collectProperties(Map<String,String> properties)
+	{
+		if (location != null)
+		{
+			properties.put("Location", location.asString());
+			properties.put("Location Description", location.getDescription());
+			
+			MapCodeLocation mcLoc = location.toMapCode();
+			if (mcLoc != null)
+				properties.put("Location (MapCode)", HtmlUtil.asHrefNewWindow(mcLoc.getMapLink(), mcLoc.asString()));
+			
+			GpsLocation gpsLoc = location.toGps();
+			if (gpsLoc != null)
+				properties.put("Location (GPS)", HtmlUtil.asHrefNewWindow(gpsLoc.getMapLink(), gpsLoc.asString()));
+		}
+		else
+		{
+			properties.put("Location", "-");
+		}
 	}
 }

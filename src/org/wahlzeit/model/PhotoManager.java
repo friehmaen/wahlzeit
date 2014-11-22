@@ -24,6 +24,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 
+import org.wahlzeit.longtimeexp.LongTimeExposureManager;
 import org.wahlzeit.main.*;
 import org.wahlzeit.services.*;
 
@@ -38,7 +39,7 @@ public class PhotoManager extends ObjectManager {
 	/**
 	 * 
 	 */
-	protected static final PhotoManager instance = new PhotoManager();
+	protected static PhotoManager instance = null;
 
 	/**
 	 * In-memory cache for photos
@@ -55,6 +56,17 @@ public class PhotoManager extends ObjectManager {
 	 */
 	public static final PhotoManager getInstance() {
 		return instance;
+	}
+	
+	public static final void setInstance(PhotoManager mgr)
+	{
+		instance = mgr;
+	}
+	
+	public static PhotoManager createInstance()
+	{
+		PhotoFactory.initialize();
+		return new PhotoManager();
 	}
 	
 	/**
@@ -137,6 +149,7 @@ public class PhotoManager extends ObjectManager {
 	 * 
 	 */
 	protected Photo createObject(ResultSet rset) throws SQLException {
+		SysLog.logInfo("Photo", "Using PhotoFactory to create a photo object");
 		return PhotoFactory.getInstance().createPhoto(rset);
 	}
 	

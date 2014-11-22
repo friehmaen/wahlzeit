@@ -63,3 +63,10 @@ INSERT INTO globals (id, last_user_id, last_photo_id, last_case_id, last_session
 INSERT INTO users (id, name, name_as_tag, email_address, "password", rights, status)
 	VALUES (1, 'admin', 'admin', 'root@localhost', 'admin', 4, 1);
 
+
+CREATE TABLE longTimeExposureMetaData (
+	id integer PRIMARY KEY,
+	photoId integer,
+	exposureType text,
+	exposureTime integer
+);

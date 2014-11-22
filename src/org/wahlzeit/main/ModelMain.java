@@ -24,6 +24,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.sql.*;
 
+import org.wahlzeit.longtimeexp.LongTimeExposureFactory;
+import org.wahlzeit.longtimeexp.LongTimeExposureManager;
 import org.wahlzeit.model.*;
 import org.wahlzeit.services.*;
 import org.wahlzeit.servlets.AbstractServlet;
@@ -50,8 +52,12 @@ public abstract class ModelMain extends AbstractMain {
 		}
 		
  		loadGlobals();
-
-		PhotoFactory.initialize();
+ 		
+ 		PhotoFactory.initialize();
+ 		LongTimeExposureFactory.initialize();
+		
+		PhotoManager.setInstance(LongTimeExposureManager.createInstance());
+		//PhotoManager.setInstance(PhotoManager.createInstance());
 	}
 	
 	/**

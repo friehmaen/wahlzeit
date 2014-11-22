@@ -1,5 +1,9 @@
 package org.wahlzeit.location;
 
+/**
+ * @author freeman
+ *
+ */
 public interface Location {
 	
 	public String asString();

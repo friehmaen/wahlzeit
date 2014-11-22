@@ -167,26 +167,17 @@ public class ShowPhotoPageHandler extends AbstractWebPageHandler implements WebF
 		WebPart caption = createWebPart(us, PartUtil.CAPTION_INFO_FILE);
 		caption.addString(Photo.CAPTION, getPhotoCaption(us, photo));
 		
-		Location loc = photo.getLocation();
-		
-		if (loc != null)
+		Map<String, String> props = photo.getProperties();
+		String output = "<table>";
+		for (String key : props.keySet())
 		{
-			caption.addString(Photo.LOCATION, loc.asString());
-			caption.addString(Photo.LOCATION_DESC, loc.getDescription());
-			//caption.addString(Photo.LOCATION_URL, "<a href=\"" + loc.getMapLink() + "\" target=\"new\">" + loc.asString() + "</a>");
-			
-			MapCodeLocation mcLoc = loc.toMapCode();
-			if (mcLoc != null)
-				caption.addString(Photo.LOCATION_URL_MAPCODE, HtmlUtil.asHrefNewWindow(mcLoc.getMapLink(), mcLoc.asString()));
-			
-			GpsLocation gpsLoc = loc.toGps();
-			if (gpsLoc != null)
-				caption.addString(Photo.LOCATION_URL_GPS, HtmlUtil.asHrefNewWindow(gpsLoc.getMapLink(), gpsLoc.asString()));
+			output += "<tr>";
+			output += "<td>" + key + "</td>";
+			output += "<td>" + props.get(key) + "</td>";
+			output += "</tr>";
 		}
-		else
-		{
-			caption.addString(Photo.LOCATION, "-");
-		}
+		output += "</table>";
+		caption.addString(Photo.PROPERTIES, output);
 		
 		page.addWritable(Photo.CAPTION, caption);
 	}
