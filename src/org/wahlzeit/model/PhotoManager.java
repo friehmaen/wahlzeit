@@ -24,7 +24,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.*;
 
-import org.wahlzeit.longtimeexp.LongTimeExposureManager;
+import org.wahlzeit.longtimeexposure.LongTimeExposureManager;
 import org.wahlzeit.main.*;
 import org.wahlzeit.services.*;
 

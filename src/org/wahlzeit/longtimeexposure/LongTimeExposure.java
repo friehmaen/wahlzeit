@@ -1,4 +1,4 @@
-package org.wahlzeit.longtimeexp;
+package org.wahlzeit.longtimeexposure;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

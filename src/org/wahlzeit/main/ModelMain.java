@@ -24,8 +24,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.sql.*;
 
-import org.wahlzeit.longtimeexp.LongTimeExposureFactory;
-import org.wahlzeit.longtimeexp.LongTimeExposureManager;
+import org.wahlzeit.longtimeexposure.LongTimeExposureFactory;
+import org.wahlzeit.longtimeexposure.LongTimeExposureManager;
 import org.wahlzeit.model.*;
 import org.wahlzeit.services.*;
 import org.wahlzeit.servlets.AbstractServlet;

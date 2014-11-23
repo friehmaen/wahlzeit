@@ -23,9 +23,9 @@ package org.wahlzeit.handlers;
 import java.util.*;
 
 import org.wahlzeit.location.LocationFactory;
-import org.wahlzeit.longtimeexp.LongTimeExposure;
-import org.wahlzeit.longtimeexp.LongTimeExposureFactory;
-import org.wahlzeit.longtimeexp.PhotoMetaData;
+import org.wahlzeit.longtimeexposure.LongTimeExposure;
+import org.wahlzeit.longtimeexposure.LongTimeExposureFactory;
+import org.wahlzeit.longtimeexposure.PhotoMetaData;
 import org.wahlzeit.model.*;
 import org.wahlzeit.utils.*;
 import org.wahlzeit.webparts.*;
