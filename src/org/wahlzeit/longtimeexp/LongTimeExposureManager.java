@@ -3,6 +3,9 @@ package org.wahlzeit.longtimeexp;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoId;
@@ -56,6 +59,36 @@ public class LongTimeExposureManager extends PhotoManager {
 		}
 		
 		return result;
+	}
+	
+	protected void updateDependents(Persistent obj) throws SQLException {
+		super.updateDependents(obj);
+		
+		LongTimeExposure photo = (LongTimeExposure) obj;
+		
+		saveMetaData(photo.getMetaData());
+	}
+	
+	protected void saveMetaData(PhotoMetaData meta)
+	{
+		try {
+			PreparedStatement stmt = getUpdatingStatement("SELECT * FROM " + PhotoMetaData.TABLE + " WHERE id = ?");
+			if (meta.isDirty()) {
+				meta.writeId(stmt, 1);
+				SysLog.logQuery(stmt);
+				ResultSet rset = stmt.executeQuery();
+				if (rset.next()) {
+					meta.writeOn(rset);
+					rset.updateRow();
+					meta.resetWriteCount();
+				} else {
+					SysLog.logSysError("trying to update non-existent object: " + meta.getIdAsString() + "(" + meta.toString() + ")");
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 		
 	protected <T extends Persistent> Persistent readObject(Class<T> object, PreparedStatement stmt, int value) throws SQLException 

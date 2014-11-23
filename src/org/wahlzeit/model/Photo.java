@@ -55,6 +55,8 @@ public class Photo extends DataObject {
 	public static final String NO_VOTES = "noVotes";
 	public static final String CAPTION = "caption";
 	public static final String LOCATION = "location";
+	public static final String EXPTIME = "expTime";
+	public static final String EXPTYPE = "expType";
 	public static final String PROPERTIES = "properties";
 	public static final String DESCRIPTION = "description";
 	public static final String KEYWORDS = "keywords";

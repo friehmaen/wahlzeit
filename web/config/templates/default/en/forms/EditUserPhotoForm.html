@@ -19,9 +19,28 @@
 				<input type="text" name="tags" value="{$tags}" size="40">&nbsp;(comma separated)
 			</td>
 		</tr>
+                <tr>
+                        <td class="fiveCol2">Location:&nbsp;</td>
+                        <td class="fiveCol3x" colspan="3">
+                                <input type="text" name="location" value="{$location}" size="40">&nbsp;
+                        </td>
+                </tr>
+                <tr>
+                        <td class="fiveCol2">Exposure Time:&nbsp;</td>
+                        <td class="fiveCol3x" colspan="3">
+                                <input type="text" name="expTime" value="{$expTime}" size="40">&nbsp;
+                        </td>
+                </tr>
+                <tr>
+                        <td class="fiveCol2">Exposure Type:&nbsp;</td>
+                        <td class="fiveCol3x" colspan="3">
+                                <input type="text" name="expType" value="{$expType}" size="40">&nbsp;
+                        </td>
+                </tr>
+
 		<tr>
 			<td class="fiveCol2">&nbsp;</td>
-			<td class="fiveCol3x" colspan="3">
+				<td class="fiveCol3x" colspan="3">
 				<input type="hidden" name="id" value="{$id}" />
 				<input type="submit" name="update" value="Update!" />
 			</td>

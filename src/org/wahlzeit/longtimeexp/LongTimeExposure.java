@@ -15,6 +15,8 @@ public class LongTimeExposure extends Photo {
 	public LongTimeExposure() {	
 		super();
 		
+		m_metaData = new PhotoMetaData();
+		
 		SysLog.logSysInfo("LTE", "creating a LongTimeExposure with default constructor");
 	}
 	
@@ -24,6 +26,8 @@ public class LongTimeExposure extends Photo {
 	 */
 	public LongTimeExposure(PhotoId myId) {
 		super(myId);
+		
+		m_metaData = new PhotoMetaData();
 		
 		SysLog.logSysInfo("LTE", "creating a LongTimeExposure from PhotoId");
 	}

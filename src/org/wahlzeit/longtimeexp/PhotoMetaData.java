@@ -55,6 +55,8 @@ public class PhotoMetaData extends DataObject {
 	
 	public void setType(ExposureType type) {
 		this.m_type = type;
+		
+		incWriteCount();
 	}
 	
 	public ExposureType getType() {
@@ -102,6 +104,7 @@ public class PhotoMetaData extends DataObject {
 
 	public void setExposureTime(int exposureTime) {
 		this.m_exposureTime = exposureTime;
+		incWriteCount();
 	}
 
 }

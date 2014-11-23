@@ -22,6 +22,10 @@ package org.wahlzeit.handlers;
 
 import java.util.*;
 
+import org.wahlzeit.location.LocationFactory;
+import org.wahlzeit.longtimeexp.LongTimeExposure;
+import org.wahlzeit.longtimeexp.LongTimeExposureFactory;
+import org.wahlzeit.longtimeexp.PhotoMetaData;
 import org.wahlzeit.model.*;
 import org.wahlzeit.utils.*;
 import org.wahlzeit.webparts.*;
@@ -63,6 +67,16 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 		part.addString(Photo.PRAISE, photo.getPraiseAsString(us.cfg()));
 		part.maskAndAddString(Photo.TAGS, photo.getTags().asString());
 		
+		if (photo.getLocation() != null)
+			part.addString(Photo.LOCATION, photo.getLocation().asString());
+		
+		LongTimeExposure lte = (LongTimeExposure)photo;
+		if (lte.getMetaData() != null)
+		{
+			part.addString(Photo.EXPTIME, String.valueOf(lte.getMetaData().getExposureTime()));
+			part.addString(Photo.EXPTYPE, lte.getMetaData().getTypeAsString());
+		}
+		
 		part.addString(Photo.IS_INVISIBLE, HtmlUtil.asCheckboxCheck(photo.getStatus().isInvisible()));
 		part.addString(Photo.STATUS, us.cfg().asValueString(photo.getStatus()));
 		part.addString(Photo.UPLOADED_ON, us.cfg().asDateString(photo.getCreationTime()));	
@@ -92,6 +106,20 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 		boolean isInvisible = (status != null) && status.equals("on");
 		PhotoStatus ps = photo.getStatus().asInvisible(isInvisible);
 		photo.setStatus(ps);
+		
+		String location = us.getAndSaveAsString(args, Photo.LOCATION);
+		photo.setLocation(LocationFactory.create(location));
+		
+		LongTimeExposure lte = (LongTimeExposure)photo;
+		if (lte.getMetaData() == null)
+		{
+			lte.setMetaData(new PhotoMetaData());
+		}
+		String expTime = us.getAndSaveAsString(args, Photo.EXPTIME);
+		lte.getMetaData().setExposureTime(Integer.parseInt(expTime));
+		
+		String expType = us.getAndSaveAsString(args, Photo.EXPTYPE);
+		lte.getMetaData().setType(PhotoMetaData.getTypeFromString(expType));
 
 		pm.savePhoto(photo);
 		
