@@ -12,32 +12,21 @@ import org.wahlzeit.services.*;
 public class LongTimeExposureFactory extends PhotoFactory {
 	
 	/**
-	 * Hidden singleton instance; needs to be initialized from the outside.
-	 */
-	private static LongTimeExposureFactory instance = null;
-	
-	/**
 	 * Public singleton access method.
 	 */
 	public static synchronized PhotoFactory getInstance() {
-		if (instance == null) {
-			SysLog.logSysInfo("setting generic PhotoFactory");
+		if (doGetInstance() == null) {
+			SysLog.logSysInfo("setting generic LongTimeExposureFactory");
 			setInstance(new LongTimeExposureFactory());
 		}
 		
-		return instance;
+		return doGetInstance();
 	}
 	
-	/**
-	 * Method to set the singleton instance of PhotoFactory.
-	 */
-	protected static synchronized void setInstance(LongTimeExposureFactory photoFactory) {
-		if (instance != null) {
-			throw new IllegalStateException("attempt to initalize PhotoFactory twice");
-		}
-		
-		instance = photoFactory;
+	public static void initialize() {
+		getInstance(); // drops result due to getInstance() side-effects
 	}
+	
 	
 	/**
 	 * 

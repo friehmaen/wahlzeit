@@ -42,7 +42,7 @@ public class PhotoMetaData extends DataObject {
 	@Override
 	public void writeOn(ResultSet rset) throws SQLException {
 		
-		rset.updateInt(COL_ID, m_id);
+		//rset.updateInt(COL_ID, m_id);
 		rset.updateInt(COL_PHOTOID, m_photoId.asInt());
 		rset.updateString(COL_TYPE, m_type.name());
 		rset.updateInt(COL_TIME, m_exposureTime);

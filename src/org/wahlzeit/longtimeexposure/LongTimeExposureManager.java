@@ -20,15 +20,6 @@ public class LongTimeExposureManager extends PhotoManager {
 		return new LongTimeExposureManager();
 	}
 	
-	public LongTimeExposureManager() {
-			photoTagCollector = LongTimeExposureFactory.getInstance().createPhotoTagCollector();
-	}
-	
-	protected Photo createObject(ResultSet rset) throws SQLException {
-		SysLog.logInfo("LTE", "Using LongTimeExposureFactory to create a long time exposure object");
-		return LongTimeExposureFactory.getInstance().createPhoto(rset);
-	}
-	
 	public LongTimeExposure getPhotoFromId(PhotoId id) {
 		if (id.isNullId()) {
 			return null;
@@ -73,6 +64,7 @@ public class LongTimeExposureManager extends PhotoManager {
 	{
 		try {
 			PreparedStatement stmt = getUpdatingStatement("SELECT * FROM " + PhotoMetaData.TABLE + " WHERE id = ?");
+
 			if (meta.isDirty()) {
 				meta.writeId(stmt, 1);
 				SysLog.logQuery(stmt);
@@ -82,7 +74,11 @@ public class LongTimeExposureManager extends PhotoManager {
 					rset.updateRow();
 					meta.resetWriteCount();
 				} else {
-					SysLog.logSysError("trying to update non-existent object: " + meta.getIdAsString() + "(" + meta.toString() + ")");
+					rset.moveToInsertRow();
+					meta.writeOn(rset);
+					rset.insertRow();
+					meta.resetWriteCount();
+					//SysLog.logSysError("trying to update non-existent object: " + meta.getIdAsString() + "(" + meta.toString() + ")");
 				}
 			}
 		} catch (SQLException e) {

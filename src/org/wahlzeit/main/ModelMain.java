@@ -53,7 +53,7 @@ public abstract class ModelMain extends AbstractMain {
 		
  		loadGlobals();
  		
- 		PhotoFactory.initialize();
+ 		//PhotoFactory.initialize();
  		LongTimeExposureFactory.initialize();
 		
 		PhotoManager.setInstance(LongTimeExposureManager.createInstance());

@@ -65,8 +65,8 @@ INSERT INTO users (id, name, name_as_tag, email_address, "password", rights, sta
 
 
 CREATE TABLE longTimeExposureMetaData (
-	id integer PRIMARY KEY,
-	photoId integer,
+	id SERIAL PRIMARY KEY,
+	photoId integer REFERENCES photos(id),
 	exposureType text,
 	exposureTime integer
 );

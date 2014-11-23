@@ -41,7 +41,7 @@ public class PhotoFactory {
 	 * Public singleton access method.
 	 */
 	public static synchronized PhotoFactory getInstance() {
-		if (instance == null) {
+		if (doGetInstance() == null) {
 			SysLog.logSysInfo("setting generic PhotoFactory");
 			setInstance(new PhotoFactory());
 		}
@@ -58,6 +58,11 @@ public class PhotoFactory {
 		}
 		
 		instance = photoFactory;
+	}
+	
+	protected static PhotoFactory doGetInstance()
+	{
+		return instance;
 	}
 	
 	/**

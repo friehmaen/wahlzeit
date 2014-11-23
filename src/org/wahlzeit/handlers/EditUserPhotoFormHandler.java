@@ -114,9 +114,11 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 		if (lte.getMetaData() == null)
 		{
 			lte.setMetaData(new PhotoMetaData());
+			lte.getMetaData().setPhotoId(photo.getId());
 		}
 		String expTime = us.getAndSaveAsString(args, Photo.EXPTIME);
-		lte.getMetaData().setExposureTime(Integer.parseInt(expTime));
+		if (expTime.length() > 0)
+			lte.getMetaData().setExposureTime(Integer.parseInt(expTime));
 		
 		String expType = us.getAndSaveAsString(args, Photo.EXPTYPE);
 		lte.getMetaData().setType(PhotoMetaData.getTypeFromString(expType));
