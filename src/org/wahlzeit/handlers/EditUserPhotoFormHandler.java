@@ -75,7 +75,20 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 		if (lte.getMetaData() != null)
 		{
 			part.addString(Photo.EXPTIME, String.valueOf(lte.getMetaData().getExposureTime()));
-			part.addString(Photo.EXPTYPE, lte.getMetaData().getType().asString());
+			
+			String types = "";
+			ExposureType myType= lte.getMetaData().getType();
+			for (ExposureType t : ExposureType.values())
+			{
+				if (myType.equals(t))
+					types += "<option selected=\"true\">";
+				else
+					types += "<option>";
+				
+				types += t.asString();
+				types += "</option>";
+			}
+			part.addString(Photo.EXPTYPE, types);
 		}
 		
 		part.addString(Photo.IS_INVISIBLE, HtmlUtil.asCheckboxCheck(photo.getStatus().isInvisible()));
@@ -112,11 +125,6 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 		photo.setLocation(LocationFactory.create(location));
 		
 		LongTimeExposure lte = (LongTimeExposure)photo;
-		if (lte.getMetaData() == null)
-		{
-			lte.setMetaData(new PhotoMetaData());
-			lte.getMetaData().setPhotoId(photo.getId());
-		}
 		String expTime = us.getAndSaveAsString(args, Photo.EXPTIME);
 		if (expTime.length() > 0)
 			lte.getMetaData().setExposureTime(Integer.parseInt(expTime));
