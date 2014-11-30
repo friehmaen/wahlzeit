@@ -28,6 +28,7 @@ public class LongTimeExposure extends Photo {
 		super(myId);
 		
 		m_metaData = new PhotoMetaData();
+		m_metaData.setPhotoId(getId());
 		
 		SysLog.logSysInfo("LTE", "creating a LongTimeExposure from PhotoId");
 	}

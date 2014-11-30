@@ -3,11 +3,7 @@ package org.wahlzeit.longtimeexposure;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
-import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.model.PhotoManager;
 import org.wahlzeit.services.Persistent;
@@ -44,6 +40,12 @@ public class LongTimeExposureManager extends PhotoManager {
 			PreparedStatement stmt = getReadingStatement("SELECT * FROM " + PhotoMetaData.TABLE + " WHERE photoId = ?");
 			
 			result = (PhotoMetaData) readObject(PhotoMetaData.class, stmt, photoId.asInt());
+			
+			if (result == null)
+			{
+				result = new PhotoMetaData();
+				result.setPhotoId(photoId);
+			}
 			
 		} catch (SQLException sex) {
 			SysLog.logThrowable(sex);
