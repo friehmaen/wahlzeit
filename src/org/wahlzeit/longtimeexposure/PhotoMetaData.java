@@ -9,11 +9,6 @@ import org.wahlzeit.services.DataObject;
 
 public class PhotoMetaData extends DataObject {
 	
-	public enum ExposureType
-	{
-		Darkness, NeutralFilter, OverExposed, Unspecified;
-	}
-	
 	public final static String COL_ID      = "id";
 	public final static String COL_TYPE    = "exposureType";
 	public final static String COL_PHOTOID = "photoId";
@@ -22,7 +17,7 @@ public class PhotoMetaData extends DataObject {
 	
 	private int          m_id = -1;
 	private PhotoId      m_photoId;
-	private ExposureType m_type = ExposureType.Unspecified;
+	private ExposureType m_type = ExposureType.UNSPECIFIED;
 	private int          m_exposureTime = 0;
 	
 	@Override
@@ -35,7 +30,7 @@ public class PhotoMetaData extends DataObject {
 		
 		m_id = rset.getInt(COL_ID);
 		m_photoId = PhotoId.getIdFromInt(rset.getInt(COL_PHOTOID));
-		m_type = getTypeFromString(rset.getString(COL_TYPE));
+		m_type = ExposureType.fromInt((rset.getInt(COL_TYPE)));
 		m_exposureTime = rset.getInt(COL_TIME);
 	}
 
@@ -44,7 +39,7 @@ public class PhotoMetaData extends DataObject {
 		
 		//rset.updateInt(COL_ID, m_id);
 		rset.updateInt(COL_PHOTOID, m_photoId.asInt());
-		rset.updateString(COL_TYPE, m_type.name());
+		rset.updateInt(COL_TYPE, m_type.asInt());
 		rset.updateInt(COL_TIME, m_exposureTime);
 	}
 
@@ -61,25 +56,6 @@ public class PhotoMetaData extends DataObject {
 	
 	public ExposureType getType() {
 		return m_type;
-	}
-	
-	public String getTypeAsString() {
-		return m_type.name();
-	}
-	
-	public static ExposureType getTypeFromString(String type)
-	{
-		ExposureType t;
-		
-		try {
-			t = ExposureType.valueOf(type);
-		}
-		catch (IllegalArgumentException ex)
-		{
-			t = ExposureType.Unspecified;
-		}
-		
-		return t;
 	}
 
 	public PhotoId getPhotoId() {

@@ -23,6 +23,7 @@ package org.wahlzeit.handlers;
 import java.util.*;
 
 import org.wahlzeit.location.LocationFactory;
+import org.wahlzeit.longtimeexposure.ExposureType;
 import org.wahlzeit.longtimeexposure.LongTimeExposure;
 import org.wahlzeit.longtimeexposure.LongTimeExposureFactory;
 import org.wahlzeit.longtimeexposure.PhotoMetaData;
@@ -74,7 +75,7 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 		if (lte.getMetaData() != null)
 		{
 			part.addString(Photo.EXPTIME, String.valueOf(lte.getMetaData().getExposureTime()));
-			part.addString(Photo.EXPTYPE, lte.getMetaData().getTypeAsString());
+			part.addString(Photo.EXPTYPE, lte.getMetaData().getType().asString());
 		}
 		
 		part.addString(Photo.IS_INVISIBLE, HtmlUtil.asCheckboxCheck(photo.getStatus().isInvisible()));
@@ -121,7 +122,7 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 			lte.getMetaData().setExposureTime(Integer.parseInt(expTime));
 		
 		String expType = us.getAndSaveAsString(args, Photo.EXPTYPE);
-		lte.getMetaData().setType(PhotoMetaData.getTypeFromString(expType));
+		lte.getMetaData().setType(ExposureType.fromString(expType));
 
 		pm.savePhoto(photo);
 		
