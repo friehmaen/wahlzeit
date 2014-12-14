@@ -68,5 +68,6 @@ CREATE TABLE longTimeExposureMetaData (
 	id SERIAL PRIMARY KEY,
 	photoId integer REFERENCES photos(id),
 	exposureType integer,
-	exposureTime integer
+	exposureTime integer,
+	objectType text
 );

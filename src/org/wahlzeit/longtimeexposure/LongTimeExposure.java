@@ -62,6 +62,7 @@ public class LongTimeExposure extends Photo {
 		{
 			properties.put("Exposure Time", String.valueOf(m_metaData.getExposureTime()));
 			properties.put("Exposure Type", m_metaData.getType().asString());
+			properties.put("ObjectType", m_metaData.getObjectType().asString());
 		}
 	}
 

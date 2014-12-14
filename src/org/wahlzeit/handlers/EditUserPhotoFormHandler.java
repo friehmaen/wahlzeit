@@ -89,6 +89,7 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 				types += "</option>";
 			}
 			part.addString(Photo.EXPTYPE, types);
+			part.addString(Photo.OBJECTTYPE, lte.getMetaData().getObjectType().asString());
 		}
 		
 		part.addString(Photo.IS_INVISIBLE, HtmlUtil.asCheckboxCheck(photo.getStatus().isInvisible()));
@@ -131,6 +132,8 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 		
 		String expType = us.getAndSaveAsString(args, Photo.EXPTYPE);
 		lte.getMetaData().setType(ExposureType.fromString(expType));
+		
+		lte.getMetaData().getObjectType().fromString(us.getAndSaveAsString(args, Photo.OBJECTTYPE));
 
 		pm.savePhoto(photo);
 		

@@ -13,11 +13,13 @@ public class PhotoMetaData extends DataObject {
 	public final static String COL_TYPE    = "exposureType";
 	public final static String COL_PHOTOID = "photoId";
 	public final static String COL_TIME    = "exposureTime";
+	public final static String COL_OBJTYPE = "objectType";
 	public final static String TABLE       = "longTimeExposureMetaData";
 	
 	private int          m_id = -1;
 	private PhotoId      m_photoId;
 	private ExposureType m_type = ExposureType.UNSPECIFIED;
+	private ObjectType   m_objectType = new ObjectType("EmptyObject");
 	private int          m_exposureTime = 0;
 	
 	@Override
@@ -32,6 +34,7 @@ public class PhotoMetaData extends DataObject {
 		m_photoId = PhotoId.getIdFromInt(rset.getInt(COL_PHOTOID));
 		m_type = ExposureType.fromInt((rset.getInt(COL_TYPE)));
 		m_exposureTime = rset.getInt(COL_TIME);
+		m_objectType.fromString(rset.getString(COL_OBJTYPE));
 	}
 
 	@Override
@@ -41,6 +44,7 @@ public class PhotoMetaData extends DataObject {
 		rset.updateInt(COL_PHOTOID, m_photoId.asInt());
 		rset.updateInt(COL_TYPE, m_type.asInt());
 		rset.updateInt(COL_TIME, m_exposureTime);
+		rset.updateString(COL_OBJTYPE, m_objectType.asString());
 	}
 
 	@Override
@@ -80,6 +84,15 @@ public class PhotoMetaData extends DataObject {
 
 	public void setExposureTime(int exposureTime) {
 		this.m_exposureTime = exposureTime;
+		incWriteCount();
+	}
+
+	public ObjectType getObjectType() {
+		return m_objectType;
+	}
+
+	public void setObjectType(ObjectType m_objectType) {
+		this.m_objectType = m_objectType;
 		incWriteCount();
 	}
 
