@@ -7,6 +7,14 @@ import java.sql.SQLException;
 import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.services.DataObject;
 
+/**
+ * 
+ * Collects some information and meta data about the photo.
+ * 
+ * This class is part of the following collaborations:
+ * - Type Object collaboration
+ * - MetaData collaboration
+ */
 public class PhotoMetaData extends DataObject {
 	
 	public final static String COL_ID      = "id";

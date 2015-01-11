@@ -1,14 +1,19 @@
 package org.wahlzeit.longtimeexposure;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.model.PhotoManager;
 import org.wahlzeit.services.Persistent;
-import org.wahlzeit.services.SysLog;
 
+/**
+ * This is the manager class for all LongTimeExposure objects.
+ * All data handling will be done here. 
+ * 
+ * This class is part of the following collaborations:
+ * - Manager collaboration
+ * - Factory collaboration
+ */
 public class LongTimeExposureManager extends PhotoManager {
 	
 	private MetaDataManager m_metaManager = null;

@@ -13,8 +13,11 @@ import org.wahlzeit.services.Persistent;
 import org.wahlzeit.services.SysLog;
 
 /**
- * @author freeman
- *
+ * This is the manager class for all PhotoMetaData objects.
+ * All data handling will be done here. 
+ * 
+ * This class is part of the following collaborations:
+ * - Manager collaboration
  */
 public class MetaDataManager extends ObjectManager {
 

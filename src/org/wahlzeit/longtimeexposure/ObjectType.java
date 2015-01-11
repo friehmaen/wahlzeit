@@ -3,6 +3,14 @@ package org.wahlzeit.longtimeexposure;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * Describes the object in a Photo, can have a subtype.
+ * 
+ * This class is part of the following collaborations:
+ * - Type Object collaboration
+ * - MetaData collaboration
+ */
 public class ObjectType  {
 	
 	public static final String DELIMITER = ";";

@@ -8,6 +8,17 @@ import org.wahlzeit.model.Photo;
 import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.services.SysLog;
 
+/**
+ * 
+ * This is the domain class. Which handles a special type of photos. 
+ * These photos should a longer exposure time.  
+ * 
+ * This class is part of the following collaborations:
+ * - Type Object collaboration
+ * - MetaData collaboration
+ * - Manager collaboration
+ * - Factory collaboration
+ */
 public class LongTimeExposure extends Photo {
 	
 	private PhotoMetaData m_metaData = null;

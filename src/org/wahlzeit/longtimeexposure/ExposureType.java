@@ -2,6 +2,13 @@ package org.wahlzeit.longtimeexposure;
 
 import org.wahlzeit.utils.EnumValue;
 
+/**
+ * 
+ * This class in an Enum and defines the type of exposure.
+ * 
+ * This class is part of the following collaborations:
+ * - MetaData collaboration
+ */
 public enum ExposureType implements EnumValue {
 	
 	UNSPECIFIED(0), DARKNESS(1), NEUTRALFILTER(2), OVEREXPOSED(3);

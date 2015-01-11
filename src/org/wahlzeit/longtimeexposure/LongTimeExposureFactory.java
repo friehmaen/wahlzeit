@@ -8,7 +8,14 @@ import org.wahlzeit.model.PhotoFactory;
 import org.wahlzeit.model.PhotoId;
 import org.wahlzeit.services.*;
 
-
+/**
+ * 
+ * This is a factory. It should be used the create objects of the 
+ * LongTimeExposure class
+ * 
+ * This class is part of the following collaborations:
+ * - Factory collaboration
+ */
 public class LongTimeExposureFactory extends PhotoFactory {
 	
 	/**
