@@ -28,6 +28,7 @@ import org.wahlzeit.longtimeexposure.LongTimeExposure;
 import org.wahlzeit.longtimeexposure.LongTimeExposureFactory;
 import org.wahlzeit.longtimeexposure.PhotoMetaData;
 import org.wahlzeit.model.*;
+import org.wahlzeit.services.SysLog;
 import org.wahlzeit.utils.*;
 import org.wahlzeit.webparts.*;
 
@@ -113,33 +114,41 @@ public class EditUserPhotoFormHandler extends AbstractWebFormHandler {
 		String id = us.getAndSaveAsString(args, Photo.ID);
 		PhotoManager pm = PhotoManager.getInstance();
 		Photo photo = PhotoManager.getPhoto(id);
-
-		String tags = us.getAndSaveAsString(args, Photo.TAGS);
-		photo.setTags(new Tags(tags));
-
-		String status = us.getAndSaveAsString(args, Photo.IS_INVISIBLE);
-		boolean isInvisible = (status != null) && status.equals("on");
-		PhotoStatus ps = photo.getStatus().asInvisible(isInvisible);
-		photo.setStatus(ps);
 		
-		String location = us.getAndSaveAsString(args, Photo.LOCATION);
-		photo.setLocation(LocationFactory.create(location));
-		
-		LongTimeExposure lte = (LongTimeExposure)photo;
-		String expTime = us.getAndSaveAsString(args, Photo.EXPTIME);
-		if (expTime.length() > 0)
-			lte.getMetaData().setExposureTime(Integer.parseInt(expTime));
-		
-		String expType = us.getAndSaveAsString(args, Photo.EXPTYPE);
-		lte.getMetaData().setType(ExposureType.fromString(expType));
-		
-		lte.getMetaData().getObjectType().fromString(us.getAndSaveAsString(args, Photo.OBJECTTYPE));
-
-		pm.savePhoto(photo);
-		
-		StringBuffer sb = UserLog.createActionEntry("EditUserPhoto");
-		UserLog.addUpdatedObject(sb, "Photo", photo.getId().asString());
-		UserLog.log(sb);
+		try
+		{
+			String tags = us.getAndSaveAsString(args, Photo.TAGS);
+			photo.setTags(new Tags(tags));
+	
+			String status = us.getAndSaveAsString(args, Photo.IS_INVISIBLE);
+			boolean isInvisible = (status != null) && status.equals("on");
+			PhotoStatus ps = photo.getStatus().asInvisible(isInvisible);
+			photo.setStatus(ps);
+			
+			String location = us.getAndSaveAsString(args, Photo.LOCATION);
+			photo.setLocation(LocationFactory.create(location));
+			
+			LongTimeExposure lte = (LongTimeExposure)photo;
+			String expTime = us.getAndSaveAsString(args, Photo.EXPTIME);
+			if (expTime.length() > 0)
+				lte.getMetaData().setExposureTime(Integer.parseInt(expTime));
+			
+			String expType = us.getAndSaveAsString(args, Photo.EXPTYPE);
+			lte.getMetaData().setType(ExposureType.fromString(expType));
+			
+			lte.getMetaData().getObjectType().fromString(us.getAndSaveAsString(args, Photo.OBJECTTYPE));
+	
+			pm.savePhoto(photo);
+			
+			StringBuffer sb = UserLog.createActionEntry("EditUserPhoto");
+			UserLog.addUpdatedObject(sb, "Photo", photo.getId().asString());
+			UserLog.log(sb);
+		}
+		// trying to catch/log as much as possible, to hide error messages/stacks from user
+		catch (Exception ex)
+		{
+			SysLog.logThrowable(ex);
+		}
 		
 		us.setTwoLineMessage(us.cfg().getPhotoUpdateSucceeded(), us.cfg().getContinueWithShowUserHome());
 

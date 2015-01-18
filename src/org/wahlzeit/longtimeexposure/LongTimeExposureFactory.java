@@ -53,6 +53,10 @@ public class LongTimeExposureFactory extends PhotoFactory {
 	 * 
 	 */
 	public LongTimeExposure createPhoto(PhotoId id) {
+		
+		if (id == null || id.asInt() < 0)
+			throw new IllegalArgumentException("Invalid id given");
+			
 		return new LongTimeExposure(id);
 	}
 	
@@ -60,6 +64,10 @@ public class LongTimeExposureFactory extends PhotoFactory {
 	 * 
 	 */
 	public LongTimeExposure createPhoto(ResultSet rs) throws SQLException {
+		
+		if (rs == null)
+			throw new IllegalArgumentException("Null pointer result set given");
+		
 		return new LongTimeExposure(rs);
 	}
 }

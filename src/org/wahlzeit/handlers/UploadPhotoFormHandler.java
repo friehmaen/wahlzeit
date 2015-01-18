@@ -87,6 +87,7 @@ public class UploadPhotoFormHandler extends AbstractWebFormHandler {
 			UserLog.log(sb);
 			
 			us.setTwoLineMessage(us.cfg().getPhotoUploadSucceeded(), us.cfg().getKeepGoing());
+		// trying to catch/log as much as possible, to hide error messages/stacks from user
 		} catch (Exception ex) {
 			SysLog.logThrowable(ex);
 			us.setMessage(us.cfg().getPhotoUploadFailed());

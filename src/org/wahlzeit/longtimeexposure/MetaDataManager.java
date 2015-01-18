@@ -65,9 +65,17 @@ public class MetaDataManager extends ObjectManager {
 	 * @see org.wahlzeit.services.ObjectManager#createObject(java.sql.ResultSet)
 	 */
 	@Override
-	protected Persistent createObject(ResultSet rset) throws SQLException {
+	protected Persistent createObject(ResultSet rset) {
 		PhotoMetaData md = new PhotoMetaData();
-		md.readFrom(rset);
+		
+		try
+		{
+			md.readFrom(rset);
+		}
+		catch (SQLException ex)
+		{
+			SysLog.logThrowable(ex);
+		}
 		
 		return md;
 	}
